@@ -7,7 +7,7 @@ nlp = spacy.load("en_core_web_sm")
 
 API_KEY = "ce9074ae831248739593899b788886b0"
 NEWS_URL = "https://newsapi.org/v2/everything"
-ITEM = "Avocado"
+ITEM = "Salmon"
 
 # Function to fetch latest news articles
 def fetch_news():
