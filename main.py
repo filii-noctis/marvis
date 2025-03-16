@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Standard library imports
 import os
 import sys
@@ -53,8 +52,3 @@ class MarvisApp(App):
     """
     def build(self):
         sm = ScreenManager()
-=======
-print("Hello, world")
-print("Hi, world")
-print("shav said hi")
->>>>>>> fa6579f48a7c0a0eb2b46e18ffc1509aee5c81d5
