@@ -30,19 +30,28 @@ class MainScreen(Screen):
     """
     the default screen to show when the app is launched.
     """
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)  # passthrough constructor
+    pass
+    # def __init__(self, **kwargs):
+    #     super().__init__(**kwargs)  # passthrough constructor
 
-        # UI layout
-        layout = BoxLayout(orientation='vertical', spacing=0) # layout manager
-        # TODD: add status bar to app
+    #     # UI layout
+    #     layout = BoxLayout(orientation='vertical', spacing=0) # layout manager
+    #     # TODD: add status bar to app
 
-        # title/header div
-        header_div = BoxLayout(
-            orientation='vertical',
-            size_hint_y=None, 
-            height=dp(100), 
-            paadding=[ dp(15), dp(10) ])
+    #     # title/header div
+    #     header_div = BoxLayout(
+    #         orientation='vertical',
+    #         size_hint_y=None, 
+    #         height=dp(100), 
+    #         padding=[ dp(15), dp(10) ])
+        
+    #     title = Label(text="Marvis", 
+    #                   font_size=dp(22), 
+    #                   color=(0.8, 0.8, 0.8, 1), 
+    #                   bold=True, 
+    #                   halign='left', 
+    #                   size_hint_y=None, 
+    #                   height=dp(30))
 
 class MarvisApp(App):
     """
@@ -51,4 +60,14 @@ class MarvisApp(App):
     view logic should ideally be abstracted outside this
     """
     def build(self):
-        sm = ScreenManager()
+        return MainScreen()
+        # sm = ScreenManager()
+
+        # home_screen = MainScreen(name='home')
+        # sm.add_widget(home_screen)
+        
+        # sm.current = 'home'
+        # return sm
+
+if __name__ == '__main__':
+    MarvisApp().run()
