@@ -51,11 +51,8 @@ def main(page: ft.Page):
 
     # load topbar
     page.appbar = ft.AppBar(
-        leading=ft.TextButton("New", style=ft.ButtonStyle(padding=0)),
         title=ft.Text("Adaptive AppBar"),
-        actions=[
-            ft.IconButton(ft.cupertino_icons.ADD, style=ft.ButtonStyle(padding=0))
-        ],
+        center_title=True,
         bgcolor=ft.Colors.with_opacity(0.04, ft.CupertinoColors.SYSTEM_BACKGROUND),
     )
 
@@ -70,9 +67,11 @@ def main(page: ft.Page):
             ft.NavigationBarDestination(icon=ft.Icons.EXPLORE, label="Explore"),
             ft.NavigationBarDestination(icon=ft.Icons.FEED_ROUNDED, label="Recent News"),
         ],
+        selected_index=1,
         border=ft.Border(
             top=ft.BorderSide(color=ft.CupertinoColors.SYSTEM_GREY2, width=0)
         ),
+        on_change=lambda e: page.go(["/list", "/explore", "/news"][e.index])
     )
 
     page.add(
