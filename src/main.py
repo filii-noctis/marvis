@@ -47,6 +47,7 @@ def main(page: ft.Page):
     #     top_view = page.views[-1]
     #     page.go(top_view.root)
 
+    # page.on_view_pop = view_pop
     page.on_route_change = route_change
 
     # load topbar
@@ -92,7 +93,7 @@ def main(page: ft.Page):
             )
         )
     )
-    page.go("/home")
+    # page.go("/home")
 
 
 if __name__ == "__main__":
