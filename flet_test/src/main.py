@@ -40,12 +40,10 @@ def main(page):
                     ft.TextField(keyboard_type=ft.KeyboardType.TEXT),
                     ft.Switch(label="A switch"),
                     ft.FilledButton(content=ft.Text("Adaptive button")),
-                    ft.Text("Text line 1"),
-                    ft.Text("Text line 2"),
-                    ft.Text("Text line 3"),
-                ]
+                    ft.Text(f"Initial Route is {page.route}")
+]
             )
-        )
+        ),
     )
 
 
