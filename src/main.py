@@ -167,26 +167,19 @@ def news_item(title, description, date):
 
 def main(page: ft.Page):
     page.fonts = {
-        "Jacques": "/src/assets/JacquesFrancois-Regular.ttf"
+        "Jacques Francois": "/assets/JacquesFrancois-Regular.ttf"
     }
-    page.Theme = ft.Theme(font_family="Jacques")
-
+    page.theme = ft.Theme(font_family="Jacques Francois")
     page.title = "Marvis"
+    
     page.adaptive = True
     page.bgcolor = "#96979A"
 
-    # Create app bar with logo
     page.appbar = ft.AppBar(
         title=ft.Text("MARVIS", weight=ft.FontWeight.BOLD, color="#FFB6C1"),
         center_title=True,
         bgcolor=ft.colors.with_opacity(0, "#96979A"),
     )
-
-    # Create a container to hold the current screen content
-    #content_container = ft.Container(
-    #    content=ft.Column([], tight=True),
-    #    expand=True,
-    #)
 
     content_pagelet = ft.Container(
         content=ft.Column(),
@@ -230,5 +223,6 @@ def main(page: ft.Page):
     # Start with the explore screen (index 1)
     change_screen(1)
 
+    
 if __name__ == "__main__":
     ft.app(main)

@@ -1,6 +1,6 @@
 import flet as ft
 
-def home_screen(page):
+def home_screen(page: ft.Page):
     return [
         ft.Container(
             content=ft.Stack([ # rendering text outlines involves stacking
@@ -55,5 +55,4 @@ def home_screen(page):
                 top=ft.BorderSide(color=ft.CupertinoColors.SYSTEM_GREY2, width=0)
             ),
             on_change=lambda e: page.go(["/list", "/explore", "/news"][e.index])
-        )
     ]
