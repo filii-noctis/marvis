@@ -1,67 +1,42 @@
 import flet as ft
 
 # Three screens for the navigation
-def home_screen(page):
+def list(page):
     return [
         ft.Text("Your List", size=30, weight=ft.FontWeight.BOLD),
         ft.ListView(
             [
                 grocery_item(
-                    "Fresh Bagged Carrots",
-                    "Walmart Canada",
-                    27.49,
-                    1.02,
+                    "Fresh Bagged Carrots", 
+                    "Walmart Canada", 
+                    27.49, 
+                    1.02, 
                     True
                 ),
                 grocery_item(
-                    "3kg Yellow Potatoes",
-                    "Walmart Canada",
-                    14.99,
-                    0.60,
+                    "3kg Yellow Potatoes", 
+                    "Walmart Canada", 
+                    14.99, 
+                    0.60, 
                     False
                 ),
                 grocery_item(
-                    "Fresh Bagged Carrots",
-                    "Walmart Canada",
-                    27.49,
-                    1.02,
+                    "Fresh Bagged Carrots", 
+                    "Walmart Canada", 
+                    27.49, 
+                    1.02, 
                     True
                 ),
                 grocery_item(
-                    "Fresh Bagged Carrots",
-                    "Walmart Canada",
-                    27.49,
-                    1.02,
+                    "Fresh Bagged Carrots", 
+                    "Walmart Canada", 
+                    27.49, 
+                    1.02, 
                     True
                 ),
             ],
             spacing=10,
             padding=20,
-
-
-def main(page: ft.Page):
-    routes: dict[str, list[any]] = {name: input(page) if callable(input) else input for name, input in route_builder.items()}
-
-    page.fonts = {
-        "Jacques Francois": "/assets/JacquesFrancois-Regular.ttf"
-    }
-    page.theme = ft.Theme(font_family="Jacques Francois")
-
-    page.title = "marvis"
-    page.adaptive = True
-
-    """
-    Route change handler fires every time the route changes. Note that
-    this can only happen through page.go() calls since this isn't a web app.
-    """
-    def route_change(route):
-        page.views.clear()
-        # append static (always on-screen) components here
-        page.views.append(
-            ft.View(
-                page.route,
-                routes[str(page.route)]
-            )
         )
     ]
 
@@ -82,17 +57,17 @@ def explore_screen(page):
                 ft.ListView(
                     [
                         grocery_item(
-                            "Organic Bananas",
-                            "Walmart Canada",
-                            4.99,
-                            0.75,
+                            "Organic Bananas", 
+                            "Walmart Canada", 
+                            4.99, 
+                            0.75, 
                             True
                         ),
                         grocery_item(
-                            "Lean Ground Beef",
-                            "Walmart Canada",
-                            12.99,
-                            0.30,
+                            "Lean Ground Beef", 
+                            "Walmart Canada", 
+                            12.99, 
+                            0.30, 
                             False
                         ),
                     ],
@@ -104,7 +79,31 @@ def explore_screen(page):
         )
     ]
 
+def news_screen(page):
     return [
+        ft.Text("Recent News", size=30, weight=ft.FontWeight.BOLD),
+        ft.ListView(
+            [
+                news_item(
+                    "Food Prices Rising Again", 
+                    "Experts predict a 5% increase in grocery costs",
+                    "March 15, 2025"
+                ),
+                news_item(
+                    "New Discount Chain Opening", 
+                    "FreshMart plans to open 20 new locations",
+                    "March 10, 2025"
+                ),
+                news_item(
+                    "Seasonal Produce Guide", 
+                    "What to buy this spring for the best deals",
+                    "March 5, 2025"
+                ),
+            ],
+            spacing=10,
+            padding=20,
+        )
+    ]
 
 # Component for grocery item
 def grocery_item(name, store, price, price_change, price_increased):
@@ -172,7 +171,7 @@ def main(page: ft.Page):
     }
     page.theme = ft.Theme(font_family="Jacques Francois")
     page.title = "Marvis"
-
+    
     page.adaptive = True
     page.bgcolor = "#96979A"
 
@@ -186,16 +185,16 @@ def main(page: ft.Page):
         content=ft.Column(),
         visible=True
     )
-
+    
     # Function to change screen content
     def change_screen(index):
         if index == 0:
-            content_pagelet.content = ft.Column(home_screen(page))
+            content_pagelet.content = ft.Column(list(page))
         elif index == 1:
             content_pagelet.content = ft.Column(explore_screen(page))
         elif index == 2:
             content_pagelet.content = ft.Column(news_screen(page))
-
+        
         page.update()
 
     # Create navigation bar
@@ -212,14 +211,18 @@ def main(page: ft.Page):
         selected_index=1,
         on_change=lambda e: change_screen(e.control.selected_index)
     )
-
+    
     # Main page layout with content and navigation bar
     page.add(
         content_pagelet,
     )
-    # page.go("/home")
+    
+    # Set the navigation bar at the bottom of the page
+    page.navigation_bar = navigation_bar
+    
+    # Start with the explore screen (index 1)
+    change_screen(1)
 
-
-
+    
 if __name__ == "__main__":
     ft.app(main)
