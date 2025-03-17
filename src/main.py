@@ -47,13 +47,13 @@ def explore_screen(page):
             ft.Column([
                 ft.TextField(
                     hint_text="Search for Items",
-                    prefix_icon=ft.icons.SEARCH,
+                    prefix_icon=ft.Icons.SEARCH,
                     border_radius=20,
                     filled=True,
                     bgcolor="#BCB4B4",
                     expand=True
                 ),
-                ft.Divider(height=20, color=ft.colors.TRANSPARENT),
+                ft.Divider(height=20, color=ft.Colors.TRANSPARENT),
                 ft.Text("Featured Items", size=20, weight=ft.FontWeight.BOLD),
                 ft.ListView(
                     [
@@ -112,10 +112,10 @@ def grocery_item(name, store, price, price_change, price_increased):
         ft.Column([
             ft.Row([
                 ft.Container(
-                    content=ft.Icon(ft.icons.IMAGE, size=40),
+                    content=ft.Icon(ft.Icons.IMAGE, size=40),
                     width=60,
                     height=60,
-                    bgcolor=ft.colors.GREY_300,
+                    bgcolor=ft.Colors.GREY_300,
                     border_radius=8,
                 ),
                 ft.Column([
@@ -133,11 +133,11 @@ def grocery_item(name, store, price, price_change, price_increased):
                 ft.Text(
                     f"${price_change:.2f} {'Increase' if price_increased else 'Decrease'} Over Last Year",
                     size=12,
-                    color=ft.colors.RED if price_increased else ft.colors.GREEN,
+                    color=ft.Colors.RED if price_increased else ft.Colors.GREEN,
                 ),
                 ft.Icon(
-                    ft.icons.ARROW_UPWARD if price_increased else ft.icons.ARROW_DOWNWARD,
-                    color=ft.colors.RED if price_increased else ft.colors.GREEN,
+                    ft.Icons.ARROW_UPWARD if price_increased else ft.Icons.ARROW_DOWNWARD,
+                    color=ft.Colors.RED if price_increased else ft.Colors.GREEN,
                     size=14
                 )
             ])
@@ -155,14 +155,14 @@ def news_item(title, description, date):
             ft.Text(title, weight=ft.FontWeight.BOLD, size=16),
             ft.Text(description, size=14),
             ft.Row([
-                ft.Text(date, size=12, color=ft.colors.GREY_600),
-                ft.TextButton("Read more", icon=ft.icons.ARROW_FORWARD)
+                ft.Text(date, size=12, color=ft.Colors.GREY_600),
+                ft.TextButton("Read more", icon=ft.Icons.ARROW_FORWARD)
             ])
         ]),
         padding=10,
-        bgcolor=ft.colors.WHITE,
+        bgcolor=ft.Colors.WHITE,
         border_radius=8,
-        border=ft.border.all(1, ft.colors.GREY_300),
+        border=ft.border.all(1, ft.Colors.GREY_300),
         width=400
     )
 
@@ -182,7 +182,7 @@ def main(page: ft.Page):
         title=ft.Text("MARVIS", weight=ft.FontWeight.BOLD, color="#F8C3C3", size=50, font_family="Jacques Francois"),
         center_title=True,
         title_text_style=font_style,
-        bgcolor=ft.colors.with_opacity(0, "#96979A"),
+        bgcolor=ft.Colors.with_opacity(0, "#96979A"),
     )
 
     content_pagelet = ft.Container(
@@ -206,12 +206,12 @@ def main(page: ft.Page):
     navigation_bar = ft.NavigationBar(
         destinations=[
             ft.NavigationBarDestination(
-                icon=ft.icons.BOOKMARK_BORDER,
-                selected_icon=ft.icons.BOOKMARK,
+                icon=ft.Icons.BOOKMARK_BORDER,
+                selected_icon=ft.Icons.BOOKMARK,
                 label="Your List",
             ),
-            ft.NavigationBarDestination(icon=ft.icons.EXPLORE, label="Explore"),
-            ft.NavigationBarDestination(icon=ft.icons.FEED_ROUNDED, label="Recent News"),
+            ft.NavigationBarDestination(icon=ft.Icons.EXPLORE, label="Explore"),
+            ft.NavigationBarDestination(icon=ft.Icons.FEED_ROUNDED, label="Recent News"),
         ],
         selected_index=1,
         on_change=lambda e: change_screen(e.control.selected_index)
