@@ -1,8 +1,7 @@
 import flet as ft
 
 
-def main(page):
-
+def MainComponent(page):
     page.adaptive = True
 
     page.appbar = ft.AppBar(
@@ -49,4 +48,6 @@ def main(page):
     )
 
 
-ft.app(main)
+if __name__ == "__main__":
+    ft.app(MainComponent)
+    
