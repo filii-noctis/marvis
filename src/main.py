@@ -1,6 +1,5 @@
 import flet as ft
 
-<<<<<<< HEAD
 # Three screens for the navigation
 def home_screen(page):
     return [
@@ -8,51 +7,36 @@ def home_screen(page):
         ft.ListView(
             [
                 grocery_item(
-                    "Fresh Bagged Carrots", 
-                    "Walmart Canada", 
-                    27.49, 
-                    1.02, 
+                    "Fresh Bagged Carrots",
+                    "Walmart Canada",
+                    27.49,
+                    1.02,
                     True
                 ),
                 grocery_item(
-                    "3kg Yellow Potatoes", 
-                    "Walmart Canada", 
-                    14.99, 
-                    0.60, 
+                    "3kg Yellow Potatoes",
+                    "Walmart Canada",
+                    14.99,
+                    0.60,
                     False
                 ),
                 grocery_item(
-                    "Fresh Bagged Carrots", 
-                    "Walmart Canada", 
-                    27.49, 
-                    1.02, 
+                    "Fresh Bagged Carrots",
+                    "Walmart Canada",
+                    27.49,
+                    1.02,
                     True
                 ),
                 grocery_item(
-                    "Fresh Bagged Carrots", 
-                    "Walmart Canada", 
-                    27.49, 
-                    1.02, 
+                    "Fresh Bagged Carrots",
+                    "Walmart Canada",
+                    27.49,
+                    1.02,
                     True
                 ),
             ],
             spacing=10,
             padding=20,
-=======
-from home_screen import home_screen
-
-
-# ================================ #
-# USER EDITABLE ROUTES
-# place routes here for the router to read.
-# each entry here will be automatically routed to when the route changes to it's key.
-# routes can be either an array of components, or a function that returns one.
-# -------------------------------- #
-route_builder: dict[str, list[any]] = {
-    "/home": home_screen,
-}
-# ================================ #
-
 
 
 def main(page: ft.Page):
@@ -78,7 +62,6 @@ def main(page: ft.Page):
                 page.route,
                 routes[str(page.route)]
             )
->>>>>>> d43a400 (Use custom hosted font (Jacques Francois) by default)
         )
     ]
 
@@ -99,17 +82,17 @@ def explore_screen(page):
                 ft.ListView(
                     [
                         grocery_item(
-                            "Organic Bananas", 
-                            "Walmart Canada", 
-                            4.99, 
-                            0.75, 
+                            "Organic Bananas",
+                            "Walmart Canada",
+                            4.99,
+                            0.75,
                             True
                         ),
                         grocery_item(
-                            "Lean Ground Beef", 
-                            "Walmart Canada", 
-                            12.99, 
-                            0.30, 
+                            "Lean Ground Beef",
+                            "Walmart Canada",
+                            12.99,
+                            0.30,
                             False
                         ),
                     ],
@@ -185,32 +168,25 @@ def news_item(title, description, date):
 
 def main(page: ft.Page):
     page.fonts = {
-        "Jacques": "/src/assets/JacquesFrancois-Regular.ttf"
+        "Jacques Francois": "/assets/JacquesFrancois-Regular.ttf"
     }
-    page.Theme = ft.Theme(font_family="Jacques")
-
+    page.theme = ft.Theme(font_family="Jacques Francois")
     page.title = "Marvis"
+
     page.adaptive = True
     page.bgcolor = "#96979A"
 
-    # Create app bar with logo
     page.appbar = ft.AppBar(
         title=ft.Text("MARVIS", weight=ft.FontWeight.BOLD, color="#FFB6C1"),
         center_title=True,
         bgcolor=ft.colors.with_opacity(0, "#96979A"),
     )
 
-    # Create a container to hold the current screen content
-    #content_container = ft.Container(
-    #    content=ft.Column([], tight=True),
-    #    expand=True,
-    #)
-
     content_pagelet = ft.Container(
         content=ft.Column(),
         visible=True
     )
-    
+
     # Function to change screen content
     def change_screen(index):
         if index == 0:
@@ -219,7 +195,7 @@ def main(page: ft.Page):
             content_pagelet.content = ft.Column(explore_screen(page))
         elif index == 2:
             content_pagelet.content = ft.Column(news_screen(page))
-        
+
         page.update()
 
     # Create navigation bar
@@ -236,13 +212,14 @@ def main(page: ft.Page):
         selected_index=1,
         on_change=lambda e: change_screen(e.control.selected_index)
     )
-    
+
     # Main page layout with content and navigation bar
     page.add(
         content_pagelet,
     )
     # page.go("/home")
-    
+
+
 
 if __name__ == "__main__":
     ft.app(main)
