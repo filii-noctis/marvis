@@ -29,6 +29,7 @@ def scrape_price(retailer_name, item):
     # URL-encode the item by replacing spaces with %20
     encoded_item = item.replace(" ", "%20")
     search_url = retailer_urls[retailer_name].format(encoded_item)
+    print(search_url)
     
     try:
         response = requests.get(search_url, headers=headers, timeout=10)
