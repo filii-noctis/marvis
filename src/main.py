@@ -7,31 +7,31 @@ def list(page):
         ft.ListView(
             [
                 grocery_item(
-                    "Fresh Bagged Carrots", 
-                    "Walmart Canada", 
-                    27.49, 
-                    1.02, 
+                    "Fresh Bagged Carrots",
+                    "Walmart Canada",
+                    27.49,
+                    1.02,
                     True
                 ),
                 grocery_item(
-                    "3kg Yellow Potatoes", 
-                    "Walmart Canada", 
-                    14.99, 
-                    0.60, 
+                    "3kg Yellow Potatoes",
+                    "Walmart Canada",
+                    14.99,
+                    0.60,
                     False
                 ),
                 grocery_item(
-                    "Fresh Bagged Carrots", 
-                    "Walmart Canada", 
-                    27.49, 
-                    1.02, 
+                    "Fresh Bagged Carrots",
+                    "Walmart Canada",
+                    27.49,
+                    1.02,
                     True
                 ),
                 grocery_item(
-                    "Fresh Bagged Carrots", 
-                    "Walmart Canada", 
-                    27.49, 
-                    1.02, 
+                    "Fresh Bagged Carrots",
+                    "Walmart Canada",
+                    27.49,
+                    1.02,
                     True
                 ),
             ],
@@ -57,17 +57,17 @@ def explore_screen(page):
                 ft.ListView(
                     [
                         grocery_item(
-                            "Organic Bananas", 
-                            "Walmart Canada", 
-                            4.99, 
-                            0.75, 
+                            "Organic Bananas",
+                            "Walmart Canada",
+                            4.99,
+                            0.75,
                             True
                         ),
                         grocery_item(
-                            "Lean Ground Beef", 
-                            "Walmart Canada", 
-                            12.99, 
-                            0.30, 
+                            "Lean Ground Beef",
+                            "Walmart Canada",
+                            12.99,
+                            0.30,
                             False
                         ),
                     ],
@@ -85,17 +85,17 @@ def news_screen(page):
         ft.ListView(
             [
                 news_item(
-                    "Food Prices Rising Again", 
+                    "Food Prices Rising Again",
                     "Experts predict a 5% increase in grocery costs",
                     "March 15, 2025"
                 ),
                 news_item(
-                    "New Discount Chain Opening", 
+                    "New Discount Chain Opening",
                     "FreshMart plans to open 20 new locations",
                     "March 10, 2025"
                 ),
                 news_item(
-                    "Seasonal Produce Guide", 
+                    "Seasonal Produce Guide",
                     "What to buy this spring for the best deals",
                     "March 5, 2025"
                 ),
@@ -169,23 +169,27 @@ def main(page: ft.Page):
     page.fonts = {
         "Jacques Francois": "/assets/JacquesFrancois-Regular.ttf"
     }
-    page.theme = ft.Theme(font_family="Jacques Francois")
+    font_theme = ft.Theme(font_family="Jacques Francois")
+    font_style = ft.TextStyle(font_family="Jacques Francois")
+    page.theme = font_theme
     page.title = "Marvis"
-    
+
     page.adaptive = True
     page.bgcolor = "#96979A"
 
     page.appbar = ft.AppBar(
-        title=ft.Text("MARVIS", weight=ft.FontWeight.BOLD, color="#F8C3C3", size=50),
+        title=ft.Text("MARVIS", weight=ft.FontWeight.BOLD, color="#F8C3C3", size=50, font_family="Jacques Francois"),
         center_title=True,
+        title_text_style=font_style,
         bgcolor=ft.colors.with_opacity(0, "#96979A"),
     )
 
     content_pagelet = ft.Container(
         content=ft.Column(),
-        visible=True
+        visible=True,
+        theme=font_theme
     )
-    
+
     # Function to change screen content
     def change_screen(index):
         if index == 0:
@@ -194,7 +198,7 @@ def main(page: ft.Page):
             content_pagelet.content = ft.Column(explore_screen(page))
         elif index == 2:
             content_pagelet.content = ft.Column(news_screen(page))
-        
+
         page.update()
 
     # Create navigation bar
@@ -211,18 +215,18 @@ def main(page: ft.Page):
         selected_index=1,
         on_change=lambda e: change_screen(e.control.selected_index)
     )
-    
+
     # Main page layout with content and navigation bar
     page.add(
         content_pagelet,
     )
-    
+
     # Set the navigation bar at the bottom of the page
     page.navigation_bar = navigation_bar
-    
+
     # Start with the explore screen (index 1)
     change_screen(1)
 
-    
+
 if __name__ == "__main__":
     ft.app(main)
