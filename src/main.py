@@ -121,31 +121,7 @@ def explore_screen(page):
         )
     ]
 
-def news_screen(page):
     return [
-        ft.Text("Recent News", size=30, weight=ft.FontWeight.BOLD),
-        ft.ListView(
-            [
-                news_item(
-                    "Food Prices Rising Again", 
-                    "Experts predict a 5% increase in grocery costs",
-                    "March 15, 2025"
-                ),
-                news_item(
-                    "New Discount Chain Opening", 
-                    "FreshMart plans to open 20 new locations",
-                    "March 10, 2025"
-                ),
-                news_item(
-                    "Seasonal Produce Guide", 
-                    "What to buy this spring for the best deals",
-                    "March 5, 2025"
-                ),
-            ],
-            spacing=10,
-            padding=20,
-        )
-    ]
 
 # Component for grocery item
 def grocery_item(name, store, price, price_change, price_increased):
@@ -265,12 +241,8 @@ def main(page: ft.Page):
     page.add(
         content_pagelet,
     )
+    # page.go("/home")
     
-    # Set the navigation bar at the bottom of the page
-    page.navigation_bar = navigation_bar
-    
-    # Start with the explore screen (index 1)
-    change_screen(1)
 
 if __name__ == "__main__":
     ft.app(main)
