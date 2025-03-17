@@ -176,7 +176,7 @@ def main(page: ft.Page):
     page.bgcolor = "#96979A"
 
     page.appbar = ft.AppBar(
-        title=ft.Text("MARVIS", weight=ft.FontWeight.BOLD, color="#FFB6C1"),
+        title=ft.Text("MARVIS", weight=ft.FontWeight.BOLD, color="#F8C3C3", size=50),
         center_title=True,
         bgcolor=ft.colors.with_opacity(0, "#96979A"),
     )
