@@ -1,8 +1,40 @@
 import flet as ft
 
+
+# ================================ #
+# USER EDITABLE ROUTES
+# place routes here for the router to read.
+# each entry here will be automatically routed to when the route changes to it's key.
+# routes can be either an array of components, or a function that returns one.
+# -------------------------------- #
+route_builder: dict[str, list[any]] = {
+    "/": [],
+}
+# ================================ #
+
+routes: dict[str, list[any]] = {name: input() if callable(input) else input for name, input in route_builder.items()}
+
+
 def main(page):
+    page.title = "marvis"
     page.adaptive = True
 
+    """
+    Route change handler fires every time the route changes. Note that
+    this can only happen through page.go() calls since this isn't a web app.
+    """
+    def route_change(route):
+        page.views.clear()
+        # append static (always on-screen) components here
+        page.views.append(
+            ft.View(
+                route,
+                routes[route]
+            )
+        )
+        page.update()
+
+    # load topbar
     page.appbar = ft.AppBar(
         leading=ft.TextButton("New", style=ft.ButtonStyle(padding=0)),
         title=ft.Text("Adaptive AppBar"),
@@ -12,6 +44,7 @@ def main(page):
         bgcolor=ft.Colors.with_opacity(0.04, ft.CupertinoColors.SYSTEM_BACKGROUND),
     )
 
+    # load navbar at bottom
     page.navigation_bar = ft.NavigationBar(
         destinations=[
             ft.NavigationBarDestination(
