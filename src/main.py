@@ -16,8 +16,13 @@ route_builder: dict[str, list[any]] = {
 
 
 
-def main(page):
+def main(page: ft.Page):
     routes: dict[str, list[any]] = {name: input(page) if callable(input) else input for name, input in route_builder.items()}
+
+    page.fonts = {
+        "Jacques Francois": "/assets/JacquesFrancois-Regular.ttf"
+    }
+    page.theme = ft.Theme(font_family="Jacques Francois")
 
     page.title = "marvis"
     page.adaptive = True

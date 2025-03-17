@@ -1,6 +1,6 @@
 import flet as ft
 
-def home_screen(page):
+def home_screen(page: ft.Page):
     return [
         ft.Container(
             content=ft.Stack([ # rendering text outlines involves stacking
@@ -38,6 +38,5 @@ def home_screen(page):
             ]),
             alignment=ft.alignment.top_center,
             expand=True,
-        ),
-        # ft.Text("test page")
+        )
     ]
