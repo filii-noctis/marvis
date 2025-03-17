@@ -168,7 +168,7 @@ def news_item(title, description, date):
 
 def main(page: ft.Page):
     page.fonts = {
-        "Jacques Francois": "/assets/JacquesFrancois-Regular.ttf"
+        "Jacques Francois": "src/assets/JacquesFrancois-Regular.ttf"
     }
     font_theme = ft.Theme(font_family="Jacques Francois")
     font_style = ft.TextStyle(font_family="Jacques Francois")
