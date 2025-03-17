@@ -1,5 +1,7 @@
 import flet as ft
 
+from home_screen import home_screen
+
 
 # ================================ #
 # USER EDITABLE ROUTES
@@ -8,15 +10,15 @@ import flet as ft
 # routes can be either an array of components, or a function that returns one.
 # -------------------------------- #
 route_builder: dict[str, list[any]] = {
-    "/test": [
-        ft.Text("test page")],
+    "/home": home_screen,
 }
 # ================================ #
 
-routes: dict[str, list[any]] = {name: input() if callable(input) else input for name, input in route_builder.items()}
 
 
 def main(page):
+    routes: dict[str, list[any]] = {name: input(page) if callable(input) else input for name, input in route_builder.items()}
+
     page.title = "marvis"
     page.adaptive = True
 
@@ -86,6 +88,7 @@ def main(page):
             )
         )
     )
+    page.go("/home")
 
 
 if __name__ == "__main__":
