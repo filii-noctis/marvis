@@ -1,5 +1,6 @@
 import flet as ft
 
+<<<<<<< HEAD
 # Three screens for the navigation
 def home_screen(page):
     return [
@@ -37,6 +38,47 @@ def home_screen(page):
             ],
             spacing=10,
             padding=20,
+=======
+from home_screen import home_screen
+
+
+# ================================ #
+# USER EDITABLE ROUTES
+# place routes here for the router to read.
+# each entry here will be automatically routed to when the route changes to it's key.
+# routes can be either an array of components, or a function that returns one.
+# -------------------------------- #
+route_builder: dict[str, list[any]] = {
+    "/home": home_screen,
+}
+# ================================ #
+
+
+
+def main(page: ft.Page):
+    routes: dict[str, list[any]] = {name: input(page) if callable(input) else input for name, input in route_builder.items()}
+
+    page.fonts = {
+        "Jacques Francois": "/assets/JacquesFrancois-Regular.ttf"
+    }
+    page.theme = ft.Theme(font_family="Jacques Francois")
+
+    page.title = "marvis"
+    page.adaptive = True
+
+    """
+    Route change handler fires every time the route changes. Note that
+    this can only happen through page.go() calls since this isn't a web app.
+    """
+    def route_change(route):
+        page.views.clear()
+        # append static (always on-screen) components here
+        page.views.append(
+            ft.View(
+                page.route,
+                routes[str(page.route)]
+            )
+>>>>>>> d43a400 (Use custom hosted font (Jacques Francois) by default)
         )
     ]
 

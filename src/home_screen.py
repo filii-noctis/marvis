@@ -1,6 +1,6 @@
 import flet as ft
 
-def home_screen(page):
+def home_screen(page: ft.Page):
     return [
         ft.Container(
             content=ft.Stack([ # rendering text outlines involves stacking
@@ -39,21 +39,4 @@ def home_screen(page):
             alignment=ft.alignment.top_center,
             expand=True,
         ),
-        # ft.Text("test page")
-        ft.NavigationBar(
-            destinations=[
-                ft.NavigationBarDestination(
-                    icon=ft.Icons.BOOKMARK_BORDER,
-                    selected_icon=ft.Icons.BOOKMARK,
-                    label="Your List",
-                ),
-                ft.NavigationBarDestination(icon=ft.Icons.EXPLORE, label="Explore"),
-                ft.NavigationBarDestination(icon=ft.Icons.FEED_ROUNDED, label="Recent News"),
-            ],
-            selected_index=1,
-            border=ft.Border(
-                top=ft.BorderSide(color=ft.CupertinoColors.SYSTEM_GREY2, width=0)
-            ),
-            on_change=lambda e: page.go(["/list", "/explore", "/news"][e.index])
-        )
     ]
