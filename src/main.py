@@ -8,7 +8,8 @@ import flet as ft
 # routes can be either an array of components, or a function that returns one.
 # -------------------------------- #
 route_builder: dict[str, list[any]] = {
-    "/": [],
+    "/test": [
+        ft.Text("test page")],
 }
 # ================================ #
 
@@ -28,11 +29,18 @@ def main(page):
         # append static (always on-screen) components here
         page.views.append(
             ft.View(
-                route,
-                routes[route]
+                page.route,
+                routes[str(page.route)]
             )
         )
         page.update()
+
+    # def view_pop(view):
+    #     page.views.pop()
+    #     top_view = page.views[-1]
+    #     page.go(top_view.root)
+
+    page.on_route_change = route_change
 
     # load topbar
     page.appbar = ft.AppBar(
