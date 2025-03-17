@@ -50,6 +50,7 @@ def explore_screen(page):
                     prefix_icon=ft.icons.SEARCH,
                     border_radius=20,
                     filled=True,
+                    bgcolor="#BCB4B4",
                     expand=True
                 ),
                 ft.Divider(height=20, color=ft.colors.TRANSPARENT),
@@ -118,8 +119,8 @@ def grocery_item(name, store, price, price_change, price_increased):
                     border_radius=8,
                 ),
                 ft.Column([
-                    ft.Text(name, weight=ft.FontWeight.BOLD),
-                    ft.Text(store, size=12),
+                    ft.Text(name, weight=ft.FontWeight.BOLD, color="#000000"),
+                    ft.Text(store, size=12, color="#000000"),
                     ft.Row([
                         ft.Container(width=10, height=10, bgcolor="#FFD700", border_radius=10),
                         ft.Container(width=10, height=10, bgcolor="#008000", border_radius=10),
@@ -128,7 +129,7 @@ def grocery_item(name, store, price, price_change, price_increased):
                 ], spacing=5, expand=True)
             ]),
             ft.Row([
-                ft.Text(f"${price:.2f}", size=24, weight=ft.FontWeight.BOLD),
+                ft.Text(f"${price:.2f}", size=24, weight=ft.FontWeight.BOLD, color="#000000"),
                 ft.Text(
                     f"${price_change:.2f} {'Increase' if price_increased else 'Decrease'} Over Last Year",
                     size=12,
