@@ -11,6 +11,22 @@ headers = {
                   "Chrome/115.0.0.0 Safari/537.36"
 }
 
+# Enhanced headers for Walmart CA scraping
+walmart_headers = {
+    "Host": "www.walmart.ca",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:136.0) Gecko/20100101 Firefox/136.0",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.5",
+    "Accept-Encoding": "gzip, deflate, br, zstd",
+    "Sec-GPC": "1",
+    "Connection": "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "cross-site",
+    "Priority": "u=0, i"
+}
+
 # Updated URL patterns for Canadian retailers
 retailer_urls = {
     "Walmart": "https://www.walmart.ca/search?q={}",
@@ -19,6 +35,49 @@ retailer_urls = {
     "Metro": "https://www.metro.ca/en/online-grocery/search?filter={}",
     "Food Basics": "https://www.foodbasics.ca/search?filter={}"
 }
+
+
+def scrape_dispatcher(r_name: str, item: str):
+    encoded_item: str = item.replace(" ", "%20")
+    search_url: str = retailer_urls[r_name].format(encoded_item)
+    print(f"scanning {search_url}")
+
+    if r_name == "Walmart":
+        return scrape_walmart_url(search_url)
+    else:
+        return scrape_price(r_name, item)
+
+
+def scrape_walmart_url(search_url: str):
+    response = requests.get(search_url, headers=walmart_headers, timeout=10)
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    product_groups = soup.find_all('div', {'role': 'group'})
+
+    for group in product_groups:
+        last_group = group.previous
+        if last_group is not None:
+            to_cont = False
+            flex_ctr_ctr = last_group.find('div', class_='mt5 mb0')
+            if flex_ctr_ctr:
+                flex_ctr = flex_ctr_ctr.find('div', class_='flex items-center lh-title h2-l normal')
+                if flex_ctr:
+                    flex = flex_ctr.find('div', class_='gray f7 flex items-center')
+                    to_cont = True
+            if to_cont:
+                continue
+
+        price_div = group.find('div', {'data-automation-id': 'product-price'}) # Find the price div within the product group
+
+        if price_div:
+            price_element = price_div.find('div', class_='mr1 mr2-xl b black lh-copy f5 f4-l')
+
+            if price_element:
+                price = price_element.text.strip()
+                return price
+
+    return -1
+
 
 def scrape_price(retailer_name, item):
     """
@@ -30,11 +89,11 @@ def scrape_price(retailer_name, item):
     encoded_item = item.replace(" ", "%20")
     search_url = retailer_urls[retailer_name].format(encoded_item)
     print(search_url)
-    
+
     try:
         response = requests.get(search_url, headers=headers, timeout=10)
         response.raise_for_status()
-        
+
         soup = BeautifulSoup(response.text, "html.parser")
         # Extract all text and search for a price pattern like '$5.99'
         text = soup.get_text()
@@ -54,29 +113,10 @@ def scrape_price(retailer_name, item):
 
 # List of items to compare
 items = [
-    "Ground Beef", "Milk", "Chicken breast", "Eggs", "Apples", 
-    "Avocado", "Mango", "Corn", "White bread", "Baby food"
+    "Ground Beef", "Milk", "Chicken breast", "Eggs", "Apples",
+    "Avocado", "Mango", "Corn", "White bread", "PlayStation 5"
 ]
 
-# Dictionary to store prices per item; key=item, value=list of tuples (retailer, price)
-results = {}
-
-# Loop through each item and each retailer to get the prices
 for item in items:
-    results[item] = []
-    print(f"\nScraping prices for: {item}")
-    for retailer in retailer_urls:
-        price = scrape_price(retailer, item)
-        results[item].append((retailer, price))
-        # Pause to reduce risk of being blocked
-        time.sleep(1)
-
-# Print the results in a simple table-like format
-print("\n\n=== Price Comparison Results ===")
-for item, price_list in results.items():
-    # Determine the lowest price and corresponding retailer
-    lowest = min(price_list, key=lambda x: x[1])
-    print(f"\nItem: {item}")
-    for retailer, price in price_list:
-        print(f"  {retailer}: ${price}")
-    print(f"-> Lowest price: ${lowest[1]} at {lowest[0]}")
+    result = scrape_dispatcher("Walmart", item)
+    print(f"price for {item}: {result}")
