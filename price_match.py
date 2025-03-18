@@ -193,9 +193,6 @@ def scrape_price(retailer_name, item):
         return dummy_price
 
 if __name__ == "__main__": # only execute tests if this file is ran directly
-    # List of items to compare
-    retailers = [r for r, _ in retailer_urls.items()]
-
     for item in items:
         print(f"=== results for {item} ===")
         for r in retailers:
