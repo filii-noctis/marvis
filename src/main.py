@@ -167,12 +167,12 @@ def news_item(title, description, date):
     )
 
 def main(page: ft.Page):
+    
     page.fonts = {
-        "Jacques Francois": "src/assets/JacquesFrancois-Regular.ttf"
+        "Jacques Francois": "fonts/JacquesFrancois-Regular.ttf",
     }
-    font_theme = ft.Theme(font_family="Jacques Francois")
-    font_style = ft.TextStyle(font_family="Jacques Francois")
-    page.theme = font_theme
+
+    page.theme = ft.Theme(font_family="Jacques Francois")
     page.title = "Marvis"
 
     page.adaptive = True
@@ -181,14 +181,14 @@ def main(page: ft.Page):
     page.appbar = ft.AppBar(
         title=ft.Text("MARVIS", weight=ft.FontWeight.BOLD, color="#F8C3C3", size=50, font_family="Jacques Francois"),
         center_title=True,
-        title_text_style=font_style,
+        title_text_style=ft.Theme(font_family="Jacques Francois"),
         bgcolor=ft.Colors.with_opacity(0, "#96979A"),
     )
 
     content_pagelet = ft.Container(
         content=ft.Column(),
         visible=True,
-        theme=font_theme
+        theme=ft.Theme(font_family="Jacques Francois")
     )
 
     # Function to change screen content
@@ -206,13 +206,22 @@ def main(page: ft.Page):
     navigation_bar = ft.NavigationBar(
         destinations=[
             ft.NavigationBarDestination(
-                icon=ft.Icons.BOOKMARK_BORDER,
-                selected_icon=ft.Icons.BOOKMARK,
+                icon = ft.Icon(name=ft.Icons.BOOKMARK_BORDER, color="#1C1B1F"),
+                selected_icon=ft.Icon(name=ft.Icons.BOOKMARK, color="#1C1B1F"),
                 label="Your List",
             ),
-            ft.NavigationBarDestination(icon=ft.Icons.EXPLORE, label="Explore"),
-            ft.NavigationBarDestination(icon=ft.Icons.FEED_ROUNDED, label="Recent News"),
+            ft.NavigationBarDestination(
+                icon=ft.Icon(name=ft.Icons.EXPLORE, color="#1C1B1F"), 
+                label="Explore", 
+            ),
+            ft.NavigationBarDestination(
+                icon=ft.Icon(name=ft.Icons.FEED_ROUNDED, color="#1C1B1F"), 
+                label="Recent News", 
+            ),
         ],
+        bgcolor="#BCB4B4",
+        indicator_color=ft.Colors.with_opacity(0.75, "#D9D9D9"),  
+        indicator_shape=ft.RoundedRectangleBorder(20),
         selected_index=1,
         on_change=lambda e: change_screen(e.control.selected_index)
     )
