@@ -73,6 +73,11 @@ retailer_urls = {
 }
 
 
+simple_items = [
+    "beef", "milk", "chicken", "eggs", "apples",
+    "avocados", "mangoes", "corn", "white bread", "grapes"
+]
+
 items = [
     "Ground Beef", "Skim Milk", "Chicken breast", "Eggs", "Bag of Apples",
     "Bag of Avocados", "Box of Mangoes", "Canned Corn", "White bread", "Grapes"
