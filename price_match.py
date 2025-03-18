@@ -27,29 +27,58 @@ walmart_headers = {
     "Priority": "u=0, i"
 }
 
-# Zehrs headers for proper scraping
-zehrs_headers = {
-    "Host": "www.zehrs.ca",
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:136.0) Gecko/20100101 Firefox/136.0",
+# Metro headers for proper scraping
+metro_headers = {
+    "Host": "www.metro.ca",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:136.0) Gecko/20100101 Firefox/136.0",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.5",
     "Accept-Encoding": "gzip, deflate, br, zstd",
+    "Sec-GPC": "1",
     "Connection": "keep-alive",
     "Upgrade-Insecure-Requests": "1",
     "Sec-Fetch-Dest": "document",
     "Sec-Fetch-Mode": "navigate",
     "Sec-Fetch-Site": "cross-site",
-    "Priority": "u=0, i"
+    "Priority": "u=0, i",
+    "TE": "trailers"
+}
+
+# Food Basics headers for proper scraping
+foodbasics_headers = {
+    "Host": "www.foodbasics.ca",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:136.0) Gecko/20100101 Firefox/136.0",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.5",
+    "Accept-Encoding": "gzip, deflate, br, zstd",
+    "Sec-GPC": "1",
+    "Connection": "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "none",
+    "Sec-Fetch-User": "?1",
+    "Priority": "u=0, i",
+    "TE": "trailers"
 }
 
 # Updated URL patterns for Canadian retailers
 retailer_urls = {
     "Walmart": "https://www.walmart.ca/search?q={}",
-    "Zehrs": "https://www.zehrs.ca/en/search?search-bar={}",
-    "NoFrills": "https://www.nofrills.ca/search?search-bar={}",
+    # NOTE: loblaw's sites cannot be parsed without selenium
+    # "Zehrs": "https://www.zehrs.ca/en/search?search-bar={}",
+    # "NoFrills": "https://www.nofrills.ca/search?search-bar={}",
     "Metro": "https://www.metro.ca/en/online-grocery/search?filter={}",
     "Food Basics": "https://www.foodbasics.ca/search?filter={}"
 }
+
+
+items = [
+    "Ground Beef", "Skim Milk", "Chicken breast", "Eggs", "Bag of Apples",
+    "Bag of Avocados", "Box of Mangoes", "Canned Corn", "White bread", "Grapes"
+]
+
+retailers = [r for r, _ in retailer_urls.items()]
 
 
 def scrape_dispatcher(r_name: str, item: str):
@@ -59,6 +88,10 @@ def scrape_dispatcher(r_name: str, item: str):
 
     if r_name == "Walmart":
         return scrape_walmart_url(search_url)
+    elif r_name == "Metro":
+        return scrape_metro_url(search_url)
+    elif r_name == "Food Basics":
+        return scrape_fb_url(search_url)
     # elif r_name == "Zehrs":
     #     return scrape_zehrs_url(search_url)
     else:
@@ -96,19 +129,25 @@ def scrape_walmart_url(search_url: str):
     return -1
 
 
-def scrape_zehrs_url(search_url: str):
-    response = requests.get(search_url, headers=zehrs_headers, timeout=10)
-    print(response.text)
+def scrape_metro_url(search_url: str):
+    response = requests.get(search_url, headers=metro_headers, timeout=10)
     soup = BeautifulSoup(response.text, 'html.parser')
 
     # Look for the span with data-testid="regular-price"
-    price_span = soup.find('span', {'data-testid': 'regular-price'})
+    price_span = soup.find('span', {'class': 'price-update'})
 
     if price_span:
         return price_span.text.strip()
 
-    # Alternative approach if the above doesn't work
-    price_span = soup.find('span', {'class': 'chakra-text css-pwnbcb'})
+    return -1
+
+
+def scrape_fb_url(search_url: str):
+    response = requests.get(search_url, headers=foodbasics_headers, timeout=10)
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Look for the span with data-testid="regular-price"
+    price_span = soup.find('span', {'class': 'price-update'})
 
     if price_span:
         return price_span.text.strip()
@@ -148,17 +187,13 @@ def scrape_price(retailer_name, item):
         dummy_price = round(random.uniform(1, 10), 2)
         return dummy_price
 
-
 if __name__ == "__main__": # only execute tests if this file is ran directly
     # List of items to compare
-    items = [
-        "Ground Beef", "Milk", "Chicken breast", "Eggs", "Apples",
-        "Avocado", "Mango", "Corn", "White bread", "PlayStation 5"
-    ]
     retailers = [r for r, _ in retailer_urls.items()]
 
     for item in items:
-        print(f"=== results for {item}")
+        print(f"=== results for {item} ===")
         for r in retailers:
             result = scrape_dispatcher(r, item)
             print(f"price from {r}: {result}")
+        print()
